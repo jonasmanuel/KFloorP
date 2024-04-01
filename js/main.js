@@ -644,12 +644,17 @@ function fetchEntitiesByType(types, entity_id) {
         var apiData = fetchAPIAndPopulateVariable();
         for (var i = 0; i < apiData.length; i++) {
             var type = apiData[i]["entity_id"].substring(0, apiData[i]["entity_id"].indexOf("."));
-            try {
-                if (includes(types, type)) {
-                    entities.push(apiData[i]);
+            if (includes(types, type)) {
+                entities.push(apiData[i]);
+            }
+            if (type == "group") {
+                var group_entities = apiData[i].attributes.entity_id;
+                if (group_entities) {
+                    type = group_entities[0].substring(0, group_entities[0].indexOf("."))
+                    if (includes(types, type)) {
+                        entities.push(apiData[i]);
+                    }
                 }
-            } catch (err) {
-                alert(err)
             }
         }
     }
@@ -669,7 +674,7 @@ function fetchEntitiesByType(types, entity_id) {
 // TRIGGER FUNCTIONS TO API
 function homefunc(id, state, floor) {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", hassaddress + "/api/services/" + id.substring(0, id.indexOf(".")) + "/" + state);
+    xmlhttp.open("POST", hassaddress + "/api/services/homeassistant/" + state);
     xmlhttp.setRequestHeader("Authorization", "Bearer " + hasspass);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
 
