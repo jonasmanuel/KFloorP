@@ -1,6 +1,7 @@
 <!-- DO NOT CHANGE ANYTHING BELOW UNLES YOU KNOW WHAT YOU ARE DOING -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <title>KFloorP - Kindle Floorplan Panel for Home Assistant</title>
@@ -13,7 +14,8 @@
     <script src="./js/main.js"></script>
     <link rel="stylesheet" href="./css/common-style.css" />
 </head>
-<body onload="startup(1)">
+
+<body onload="startup()">
     <div id="wrapper">
         <!-- HEADER START -->
         <div id="header">
@@ -23,37 +25,37 @@
                 <span style="font-size: 30px" id="clock"></span><br />
             </div>
             <div id="main-menu">
-                <a href="index.html">
+                <a href="javascript:loadTab(1)">
                     <div class="main-menu-item" id="menu1">
                         <script>document.write(floorplanIcon);</script><br />
-                        1st Floor
+                        Layout
                     </div>
                 </a>
-                <a href="2ndfloor.html">
+                <a href="javascript:loadTab(2)">
                     <div class="main-menu-item" id="menu2">
                         <script>document.write(floorplanIcon);</script><br />
                         2nd Floor
                     </div>
                 </a>
-                <a href="switches.html">
+                <a href="javascript:loadTab(3)">
                     <div class="main-menu-item" id="menu3">
                         <script>document.write(switchesIcon);</script><br />
-                        Switches
+                        Schalter
                     </div>
                 </a>
-                <a href="lights.html">
+                <a href="javascript:loadTab(4)">
                     <div class="main-menu-item" id="menu4">
                         <script>document.write(lightOnIcon);</script><br />
-                        Lights
+                        Lampen
                     </div>
                 </a>
-                <a href="automations.html">
+                <a href="javascript:loadTab(5)">
                     <div class="main-menu-item" id="menu5">
                         <script>document.write(automationOnIcon);</script><br />
-                        Automations
+                        Automationen
                     </div>
                 </a>
-                <a href="players.html">
+                <a href="javascript:loadTab(6)">
                     <div class="main-menu-item" id="menu6">
                         <script>document.write(playIcon);</script><br />
                         Players
@@ -68,10 +70,14 @@
         </div>
         <!-- FLOORPLAN END -->
         <!-- CONTENT START -->
+        <div id="content-player">
+            <!-- FOR ONLY 1 PLAYER -->
+        </div>
         <div id="content">
         </div>
         <!-- CONTENT END -->
     </div>
     <!-- /wrapper -->
 </body>
+
 </html>

@@ -24,10 +24,10 @@ h2 {
 
 #wrapper {
     /* The kindle removes the scroll bars if the width of the page is 607 px or more... */
-    width: 607px;
+    width: 750px;
     min-height: 675px;
     /*background-color: white;*/
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPklEQVQYV2NkwAT/gUKM6MLoAjBFGIqRFaJLovBhCrFaB7QeLg5SiEsRzJlgeQxHY/EcSOg/sQoxgwGHiQwA+f4KCL3Y/AQAAAAASUVORK5CYII=) repeat;
+    /* background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPklEQVQYV2NkwAT/gUKM6MLoAjBFGIqRFaJLovBhCrFaB7QeLg5SiEsRzJlgeQxHY/EcSOg/sQoxgwGHiQwA+f4KCL3Y/AQAAAAASUVORK5CYII=) repeat; */
     overflow: hidden;
     text-align: left;
 }
@@ -57,7 +57,7 @@ h2 {
 #main-menu {
     float: left;
     margin: 15px 0 0 15px;
-    width: 445px;
+    width: 600px;
     height: 86px;
     overflow: hidden;
     text-align: center;
@@ -77,14 +77,14 @@ h2 {
     font-size: 18px;
 }
 
-    .main-menu-item svg {
-        height: 24px;
-        width: 24px;
-    }
+.main-menu-item svg {
+    height: 24px;
+    width: 24px;
+}
 
-        .main-menu-item svg > path {
-            fill: white;
-        }
+.main-menu-item svg>path {
+    fill: white;
+}
 
 .main-menu-active {
     background-color: lightgray;
@@ -92,51 +92,57 @@ h2 {
     text-decoration: none;
 }
 
-    .main-menu-active a {
-        color: black;
-        text-decoration: none !important;
-        border-bottom-style: none;
-    }
+.main-menu-active a {
+    color: black;
+    text-decoration: none !important;
+    border-bottom-style: none;
+}
 
-    .main-menu-active a, a:hover, a:link, a:active, a:visited {
-        text-decoration: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-    }
+.main-menu-active a,
+a:hover,
+a:link,
+a:active,
+a:visited {
+    text-decoration: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
 
 /******************** WEATHER ********************/
 .forecast-container {
     position: absolute;
-    display: flex;
+    /*display: flex;*/
     justify-content: space-between;
     align-items: center;
     padding: 0px;
     /*border: 1px solid #000000;*/
     margin: 0px;
+    width: 100px;
 }
 
 .forecast-item {
     text-align: center;
-    font-size: 8px;
+    font-size: 14px;
+    margin-top: 1px;
     margin-right: 1px;
     border: 1px solid #000000;
     float: left;
-    min-width: 80px;
+    min-width: 110px;
 }
 
-    .forecast-item h2 {
-        font-size: 12px;
-        border: 1px solid #ccc;
-    }
+.forecast-item h2 {
+    font-size: 20px;
+    border: 1px solid #ccc;
+}
 
-    .forecast-item p {
-        margin: 0;
-        font-size: 13px;
-    }
+.forecast-item p {
+    margin: 0;
+    font-size: 18px;
+}
 
 .min-max {
     margin: 0;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 /******************** MAIN CONTENT ********************/
@@ -149,9 +155,9 @@ h2 {
     text-align: center;
 }
 
-    #content-player .sensor_value {
-        font-size: 22px;
-    }
+#content-player .sensor_value {
+    font-size: 22px;
+}
 
 /******************** CONTENT ********************/
 #floorplan {
@@ -159,7 +165,7 @@ h2 {
     /*border: 2px solid black;*/
     display: inline-block;
     position: relative;
-    padding-left: 15px;
+    padding-left: 190px;
 }
 
 .media_info {
@@ -176,6 +182,10 @@ h2 {
 
 .floorplanImg {
     width: 100%
+}
+
+.floorplanImg.hidden {
+    display: none;
 }
 
 .icon-div {
@@ -197,25 +207,40 @@ h2 {
     position: relative;
     padding: 0;
     margin: 0;
-    display: inline-block;
+    display: block;
     padding-left: 13px;
 }
 
-    .table-devices td {
-        text-align: center;
-        font-size: 12px;
-        border: 1px solid #000000;
-        padding: 0;
-        margin: 0;
-        min-width: 110px;
-    }
+.table-devices td {
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid #000000;
+    padding: 0;
+    margin: 0;
+    min-width: 300px;
+    height: 300px;
+}
 
-    .table-devices a {
-        border: 0;
-        padding: 0;
-        margin: -5px;
-        display: block;
-    }
+.table-devices a {
+    border: 0;
+    padding: 0;
+    margin: -5px;
+    display: block;
+}
+
+.light-switch {
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #000000;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+.light-switch svg {
+    width: 80%;
+    height: 80%;
+
+}
 
 /******************** TABLE PLAYERS ********************/
 .table-players {
@@ -230,19 +255,19 @@ h2 {
     padding-left: 13px;
 }
 
-    .table-players td {
-        text-align: center;
-        font-size: 12px;
-        border: 1px solid #000000;
-        padding: 12px;
-        margin: 0;
-        min-width: 258px;
-        overflow: hidden;
-    }
+.table-players td {
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid #000000;
+    padding: 12px;
+    margin: 0;
+    min-width: 258px;
+    overflow: hidden;
+}
 
-    .table-players a {
-        border: 0;
-        padding: 0;
-        margin: -5px;
-        display: block;
-    }
+.table-players a {
+    border: 0;
+    padding: 0;
+    margin: -5px;
+    display: block;
+}

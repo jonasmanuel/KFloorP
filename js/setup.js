@@ -17,9 +17,12 @@ var floorplan2ndFloor = "./images/blank.png"; // YOUR FLOORPLAN IMAGE PATH FOR 2
 // SHOW (true) / HIDE (false) MENUS
 // SELECT A MAXIMUM OF 3 ITEMS (IF YOU USE ONLY ONE FLOOR) OR 2 ITEMS (IF YOU USE 2 FLOORS) TO FIT IN THE MENU
 var showSwitchesMenu = true;
-var showLightsMenu = false;
-var showAutomationsMenu = false;
+var showLightsMenu = true;
+var showAutomationsMenu = true;
 var showPlayersMenu = true;
+
+// button size for switches/lights/automations
+var buttonSize = 180;
 
 // IF YOUR KINDLE DOES NOT DISPLAY YOUR CORRECT TIME,
 // CHANGE THE TIMEOFFSET FROM 0 TO THE DIFFERENCE BETWEEN YOUR NEEDS
@@ -81,6 +84,14 @@ var devices1stFloor = [
 
     // KITCHEN
 
+    // outside
+    ["weather.home", 120, 15, "extended"], // EXTENDED FORECAST
+    ["weather.home", 750, 380],
+
+    //tracker (id, x, y, zone)
+    ["device_tracker.dog", 740, 640, "home"], // if dog is home
+    ["device_tracker.dog", 650, 200, "not_home"], // if dog is away
+    ["device_tracker.dog", 650, 300], // fallback, if he is in another zone
 ];
 
 
@@ -88,8 +99,8 @@ var devices1stFloor = [
 // LEAVE EMPTY IF YOU ONLY HAVE 1 FLOOR
 // EMPTY EXAMPLE: var devices2ndFloor = [];
 var devices2ndFloor = [
-	// LOFT
-	
-	// POOL
-	
+    // LOFT
+
+    // POOL
+
 ];

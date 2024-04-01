@@ -60,42 +60,94 @@ var sunnyIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" 
 var windyIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="black" d="M4 10a1 1 0 0 1-1-1a1 1 0 0 1 1-1h8a2 2 0 0 0 2-2a2 2 0 0 0-2-2c-.55 0-1.05.22-1.41.59a.973.973 0 0 1-1.42 0c-.39-.39-.39-1.03 0-1.42C9.9 2.45 10.9 2 12 2a4 4 0 0 1 4 4a4 4 0 0 1-4 4H4m15 2a1 1 0 0 0 1-1a1 1 0 0 0-1-1c-.28 0-.53.11-.71.29a.996.996 0 0 1-1.41 0c-.38-.39-.38-1.02 0-1.41C17.42 8.34 18.17 8 19 8a3 3 0 0 1 3 3a3 3 0 0 1-3 3H5a1 1 0 0 1-1-1a1 1 0 0 1 1-1h14m-1 6H4a1 1 0 0 1-1-1a1 1 0 0 1 1-1h14a3 3 0 0 1 3 3a3 3 0 0 1-3 3c-.83 0-1.58-.34-2.12-.88c-.38-.39-.38-1.02 0-1.41a.996.996 0 0 1 1.41 0c.18.18.43.29.71.29a1 1 0 0 0 1-1a1 1 0 0 0-1-1Z"/></svg>';
 var windyvariantIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="black" d="m6 6l.69.06A5.499 5.499 0 0 1 12 2a5.5 5.5 0 0 1 5.5 5.5l-.08.95c.46-.29 1-.45 1.58-.45a3 3 0 0 1 3 3a3 3 0 0 1-3 3H6a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1a1 1 0 0 0-1-1h-3.5V7.5A3.5 3.5 0 0 0 12 4a3.5 3.5 0 0 0-3.5 3.5V8H6m12 10H4a1 1 0 0 1-1-1a1 1 0 0 1 1-1h14a3 3 0 0 1 3 3a3 3 0 0 1-3 3c-.83 0-1.58-.34-2.12-.88c-.38-.39-.38-1.02 0-1.41a.996.996 0 0 1 1.41 0c.18.18.43.29.71.29a1 1 0 0 0 1-1a1 1 0 0 0-1-1Z"/></svg>';
 var exceptionalIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="black" d="M10 19h3v3h-3v-3m2-17c5.35.22 7.68 5.62 4.5 9.67c-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08c.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6Z"/></svg>';
-
+var pawIcon = '<svg preserveAspectRatio="xMidYMid meet" focusable="false" width="48" height="48" viewBox="0 0 24 24"><g><path d="M8.35,3C9.53,2.83 10.78,4.12 11.14,5.9C11.5,7.67 10.85,9.25 9.67,9.43C8.5,9.61 7.24,8.32 6.87,6.54C6.5,4.77 7.17,3.19 8.35,3M15.5,3C16.69,3.19 17.35,4.77 17,6.54C16.62,8.32 15.37,9.61 14.19,9.43C13,9.25 12.35,7.67 12.72,5.9C13.08,4.12 14.33,2.83 15.5,3M3,7.6C4.14,7.11 5.69,8 6.5,9.55C7.26,11.13 7,12.79 5.87,13.28C4.74,13.77 3.2,12.89 2.41,11.32C1.62,9.75 1.9,8.08 3,7.6M21,7.6C22.1,8.08 22.38,9.75 21.59,11.32C20.8,12.89 19.26,13.77 18.13,13.28C17,12.79 16.74,11.13 17.5,9.55C18.31,8 19.86,7.11 21,7.6M19.33,18.38C19.37,19.32 18.65,20.36 17.79,20.75C16,21.57 13.88,19.87 11.89,19.87C9.9,19.87 7.76,21.64 6,20.75C5,20.26 4.31,18.96 4.44,17.88C4.62,16.39 6.41,15.59 7.47,14.5C8.88,13.09 9.88,10.44 11.89,10.44C13.89,10.44 14.95,13.05 16.3,14.5C17.41,15.72 19.26,16.75 19.33,18.38Z"></path></g></svg>'
 
 // STARTUP FUNCTION
-function startup(floor) {
-    setMenu(floor);
+function startup() {
+
+    setupMenu();
+    var query = parseQueryParams();
+    if (query.tab) {
+        loadTab(query.tab)
+    } else {
+        loadTab(1);
+    }
+
+}
+
+function includes(array, elem) {
+    for (var i in array) {
+        if (array[i] == elem) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function parseQueryParams() {
+    var paramMap = {};
+    var searchParams = window.location.search.replace("?", "").split("&");
+    for (var i in searchParams) {
+        var split = searchParams[i].split("=");
+        paramMap[split[0]] = split[1];
+    }
+    return paramMap;
+}
+
+function loadTab(tab) {
+
+    setActiveTab(tab);
     updateClock();
     setInterval(updateClock, 20000);
+    if (window.currentIntervalId) {
+        clearInterval(window.currentIntervalId);
+    }
 
-    if (floor == 1 || floor == 2) {
-        loadContent(floor);
-        setInterval(loadContent, 10000, floor);
-    } else if (floor == 3) {
-        loadContentSwitches();
-        setInterval(loadContentSwitches, 10000);
-    } else if (floor == 4) {
-        loadContentLights();
-        setInterval(loadContentLights, 10000);
-    } else if (floor == 5) {
-        loadContentAutomations();
-        setInterval(loadContentAutomations, 10000);
-    } else if (floor == 6) {
-        loadContentPlayers();
-        setInterval(loadContentPlayers, 10000);
-        // COMMENT THE 2 LINES ABOVE
-        // UNCOMMENT THE LINES BELOW
-        // AND PUT THE NAME OF THE MEDIA PLAYER SENSOR
-        // loadContentPlayers("media_player.echo_dot");
-        // setInterval(loadContentPlayers, 10000, "media_player.echo_dot");
+    document.getElementById("content-player").innerHTML = "";
+    document.getElementById("content").innerHTML = "";
+
+
+    if (tab == 1 || tab == 2) {
+        loadContent(tab);
+        window.currentIntervalId = setInterval(loadContent, 10000, tab);
+    } else {
+        clearPlanImg();
+
+        if (tab == 3) {
+            loadContentSwitches();
+            window.currentIntervalId = setInterval(loadContentSwitches, 10000);
+        } else if (tab == 4) {
+            loadContentLights();
+            window.currentIntervalId = setInterval(loadContentLights, 10000);
+        } else if (tab == 5) {
+            loadContentAutomations();
+            window.currentIntervalId = setInterval(loadContentAutomations, 10000);
+        } else if (tab == 6) {
+            loadContentPlayers();
+            window.currentIntervalId = setInterval(loadContentPlayers, 10000);
+            // COMMENT THE 2 LINES ABOVE
+            // UNCOMMENT THE LINES BELOW
+            // AND PUT THE NAME OF THE MEDIA PLAYER SENSOR
+            // loadContentPlayers("media_player.echo_dot");
+            // setInterval(loadContentPlayers, 10000, "media_player.echo_dot");
+        }
     }
 }
 
+function setActiveTab(tab) {
+    if (window.currentTab) {
+        document.getElementById("menu" + window.currentTab).classList.remove("main-menu-active");
+    }
+    document.getElementById("menu" + tab).classList.add("main-menu-active");
+    window.currentTab = tab
+    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?tab=' + tab;
+    if (history.pushState) {
+        window.history.pushState({ path: newurl }, '', newurl);
+    }
+}
 
 // SHOW/HIDE MENU ITEMS
-function setMenu(floor) {
-    document.getElementById("menu" + floor).classList.add("main-menu-active");
-
+function setupMenu() {
     if (devices2ndFloor.length == 0) {
         var divMenu2ndFloor = document.getElementById("menu2");
         divMenu2ndFloor.parentElement.removeChild(divMenu2ndFloor);
@@ -142,6 +194,8 @@ function loadContent(floor, entity_id) {
     }
 
     var newEntity = apiData;
+    var weatherCount = 0;
+    var trackerInZone = {};
 
     for (var i = 0; i < floorEntities.length; i++) {
         if (Object.prototype.toString.call(apiData) === "[object Array]") {
@@ -466,36 +520,52 @@ function loadContent(floor, entity_id) {
 
             // WEATHER
             case "weather":
+                newIcon.id += weatherCount++;
+                newIcon.className = "forecast-container";
                 if (floorEntities[i].length == 4) {
                     switch (floorEntities[i][3].toLowerCase()) {
                         case "extended":
-                            newIcon.className = "forecast-container";
+                            populateForecast(newEntity[0], newIcon, "°C");
                             break;
                         default:
-                            newIcon.innerHTML = "<p class='sensor_value'>" + showWeatherIcon(newEntity[0]["state"]) + "<br/>" + newEntity[0]["attributes"]["temperature"] + " " + newEntity[0]["attributes"]["temperature_unit"] + "<br/>" + newEntity[0]["state"] + "</p>";
+                            populateToday(newEntity[0], newIcon, "°C")
                     }
                 } else {
-                    newIcon.innerHTML = "<p class='sensor_value'>" + showWeatherIcon(newEntity[0]["state"]) + "<br/>" + newEntity[0]["attributes"]["temperature"] + " " + newEntity[0]["attributes"]["temperature_unit"] + "<br/>" + newEntity[0]["state"] + "</p>";
+                    populateToday(newEntity[0], newIcon, "°C")
                 }
                 break;
+            case "device_tracker":
+                var name = newEntity[0].attributes.friendly_name.split(" ")[1];
+                if (floorEntities[i].length == 4) {
+                    var zone = floorEntities[i][3];
+                    newIcon.id += "_" + zone;
+                    if (newEntity[0].state == zone) {
+                        newIcon.innerHTML = name + "<br/>" + pawIcon;
+                        trackerInZone[newEntity[0]["entity_id"]] = zone;
+                    } else {
+                        newIcon.innerHTML = "";
+                    }
+                } else {
+                    if (!trackerInZone[newEntity[0]["entity_id"]]) {
+                        newIcon.innerHTML = name + "<br/>" + pawIcon + "<br/>" + newEntity[0].state;
+                    } else {
+                        newIcon.innerHTML = "";
+                    }
+                }
+                break;
+
 
             // OTHERS
             default:
                 newIcon.innerHTML = "<p class='sensor_value'>" + newEntity[0]["entity_id"] + "<br/>" + newEntity[0]["state"] + "</p>";
         }
 
-        var existingIcon = document.getElementById(newEntity[0]["entity_id"]);
-        var exists = 0;
+        var existingIcon = document.getElementById(newIcon.id);
 
         if (existingIcon == null) {
             content.appendChild(newIcon);
         } else {
-            exists = 1;
             existingIcon.innerHTML = newIcon.innerHTML;
-        }
-
-        if (newIcon.className == "forecast-container") {
-            populateForecast(newEntity[0], newEntity[0]["entity_id"], newEntity[0]["attributes"]["temperature_unit"]);
         }
     }
 }
@@ -527,11 +597,20 @@ function updateClock() {
 // GET FLOORPLAN DIV AND SET THE IMAGE FROM DATA.JS AS SRC
 function setFloorPlanImg(floor) {
     var floorplanImgDiv = document.getElementById("floorplanImg");
+    floorplanImgDiv.classList.remove("hidden");
 
     if (floor == 1) {
         floorplanImgDiv.src = floorplan1stFloor;
     } else if (floor == 2) {
         floorplanImgDiv.src = floorplan2ndFloor;
+    }
+}
+
+// hide floorplan
+function clearPlanImg() {
+    var floorplanImgDiv = document.getElementById("floorplanImg");
+    if (floorplanImgDiv) {
+        floorplanImgDiv.classList.add("hidden")
     }
 }
 
@@ -556,6 +635,36 @@ function fetchAPIAndPopulateVariable(entity_id) {
     }
 }
 
+function fetchEntitiesByType(types, entity_id) {
+    var entities = [];
+    if (entity_id) {
+        var apiData = fetchAPIAndPopulateVariable(entity_id);
+        entities.push(apiData);
+    } else {
+        var apiData = fetchAPIAndPopulateVariable();
+        for (var i = 0; i < apiData.length; i++) {
+            var type = apiData[i]["entity_id"].substring(0, apiData[i]["entity_id"].indexOf("."));
+            try {
+                if (includes(types, type)) {
+                    entities.push(apiData[i]);
+                }
+            } catch (err) {
+                alert(err)
+            }
+        }
+    }
+
+    entities.sort(function (a, b) {
+        var keyA = a.attributes["friendly_name"].toLowerCase();
+        var keyB = b.attributes["friendly_name"].toLowerCase();
+
+        if (keyA < keyB) return -1;
+        if (keyA > keyB) return 1;
+        return 0;
+    });
+    return entities;
+}
+
 
 // TRIGGER FUNCTIONS TO API
 function homefunc(id, state, floor) {
@@ -576,6 +685,10 @@ function homefunc(id, state, floor) {
                     loadContentSwitches(id);
                 } else if (floor == 4) {
                     loadContentLights(id);
+                } else if (floor == 5) {
+                    loadContentAutomations(id);
+                } else if (floor == 6) {
+                    loadContentPlayers(id);
                 } else {
                     loadContent(floor, id);
                 }
@@ -601,8 +714,22 @@ function sleepFor(sleepDuration) {
 
 
 // POPULATE EXTENDED FORECAST
-function populateForecast(data, entity_id, temperature_unit) {
-    var forecastContainer = document.getElementById(entity_id);
+function populateToday(data, container, temperature_unit) {
+    var forecast = data;
+
+    var date = new Date();
+    var dateString = date.toLocaleString();
+    var forecastItem = document.createElement("div");
+    forecastItem.className = "forecast-item";
+    forecastItem.innerHTML = "<h2>" + dateString.substring(0, 10); + "</h2>";
+    forecastItem.innerHTML += showWeatherIcon(forecast.state);
+    forecastItem.innerHTML += "<p class='min-max'>" + forecast.state + "</p>";
+    forecastItem.innerHTML += "<p class='min-max'>" + forecast.attributes.temperature + (temperature_unit !== undefined ? temperature_unit : "°C") + "</p>";
+    container.appendChild(forecastItem);
+}
+
+
+function populateForecast(data, forecastContainer, temperature_unit) {
 
     for (var i = 0; i < data.attributes.forecast.length; i++) {
         var forecast = data.attributes.forecast[i];
@@ -630,235 +757,104 @@ function showWeatherIcon(forecastCondition) {
 
 
 // LOAD SWITCHES
-function loadContentSwitches() {
-    var apiData;
-    var table = document.createElement("table");
-    table.className = "table-devices";
+function loadContentSwitches(clear, reload_id) {
+    var switches = fetchEntitiesByType(["switch"], reload_id);
 
-    apiData = fetchAPIAndPopulateVariable();
-
-    var switches = [];
-
-    for (var i = 0; i < apiData.length; i++) {
-        if (apiData[i]["entity_id"].substring(0, apiData[i]["entity_id"].indexOf(".")) == "switch") {
-            switches.push(apiData[i]);
+    for (var i = 0; i < switches.length; i++) {
+        const switchName = switches[i]["attributes"]["friendly_name"];
+        const current_id = switches[i]["entity_id"];
+        const state = switches[i]["state"].toLowerCase();
+        var icon, command;
+        switch (state) {
+            case "on":
+                icon = switchOnIcon;
+                command = "turn_off";
+                break;
+            case "off":
+                icon = switchOffIcon;
+                command = "turn_on";
+                break;
+            default:
+                icon = alertIcon;
+                command = "toggle";
         }
+        createButton(current_id, switchName, icon, command, 3);
     }
-
-    switches.sort(function (a, b) {
-        var keyA = a.attributes["friendly_name"].toLowerCase();
-        var keyB = b.attributes["friendly_name"].toLowerCase();
-
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
-
-    var numRows = Math.ceil(switches.length / 5);
-
-    for (var i = 0; i < numRows; i++) {
-        var row = document.createElement("tr");
-
-        for (var j = 0; j < 5; j++) {
-            var index = i * 5 + j;
-            if (index < switches.length) {
-                var cell = document.createElement("td");
-                cell.id = switches[index]["entity_id"];
-                var cellContent = switches[index]["attributes"]["friendly_name"] + "<br/>";
-
-                switch (switches[index]["state"].toLowerCase()) {
-                    case "on":
-                        cellContent += "<a href=\"javascript:homefunc('" + switches[index]["entity_id"] + "', 'turn_off', 3)\" >";
-                        cellContent += switchOnIcon;
-                        cellContent += "</a>"
-                        break;
-                    case "off":
-                        cellContent += "<a href=\"javascript:homefunc('" + switches[index]["entity_id"] + "', 'turn_on', 3)\" >";
-                        cellContent += switchOffIcon;
-                        cellContent += "</a>"
-                        break;
-                    default:
-                        cellContent += "<a href=\"javascript:homefunc('" + switches[index]["entity_id"] + "', 'toggle', 3)\" >";
-                        cellContent += alertIcon;
-                        cellContent += "</a>"
-                }
-                cell.innerHTML = cellContent;
-                row.appendChild(cell);
-            }
-        }
-
-        table.appendChild(row);
-    }
-
-    var content = document.getElementById("content");
-    content.innerHTML = "";
-    content.appendChild(table);
 }
 
 
 // LOAD LIGHTS
-function loadContentLights() {
-    var apiData;
-    var table = document.createElement("table");
-    table.className = "table-devices";
-
-    apiData = fetchAPIAndPopulateVariable();
-
-    var lights = [];
-
-    for (var i = 0; i < apiData.length; i++) {
-        if (apiData[i]["entity_id"].substring(0, apiData[i]["entity_id"].indexOf(".")) == "light") {
-            lights.push(apiData[i]);
-        }
-    }
-
-    lights.sort(function (a, b) {
-        var keyA = a.attributes["friendly_name"].toLowerCase();
-        var keyB = b.attributes["friendly_name"].toLowerCase();
-
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
-
-    var numRows = Math.ceil(lights.length / 5);
-
-    for (var i = 0; i < numRows; i++) {
-        var row = document.createElement("tr");
-
-        for (var j = 0; j < 5; j++) {
-            var index = i * 5 + j;
-            if (index < lights.length) {
-                var cell = document.createElement("td");
-                cell.id = lights[index]["entity_id"];
-                var cellContent = lights[index]["attributes"]["friendly_name"] + "<br/>";
-
-                switch (lights[index]["state"].toLowerCase()) {
-                    case "on":
-                        cellContent += "<a href=\"javascript:homefunc('" + lights[index]["entity_id"] + "', 'turn_off', 4)\" >";
-                        cellContent += lightOnIcon;
-                        cellContent += "</a>"
-                        break;
-                    case "off":
-                        cellContent += "<a href=\"javascript:homefunc('" + lights[index]["entity_id"] + "', 'turn_on', 4)\" >";
-                        cellContent += lightOffIcon;
-                        cellContent += "</a>"
-                        break;
-                    default:
-                        cellContent += "<a href=\"javascript:homefunc('" + lights[index]["entity_id"] + "', 'toggle', 4)\" >";
-                        cellContent += alertIcon;
-                        cellContent += "</a>"
-                }
-                cell.innerHTML = cellContent;
-                row.appendChild(cell);
-            }
+function loadContentLights(clear, reload_id) {
+    var lights = fetchEntitiesByType(["light"], reload_id);
+    for (var i = 0; i < lights.length; i++) {
+        const lightName = lights[i]["attributes"]["friendly_name"];
+        const entity_id = lights[i]["entity_id"];
+        const state = lights[i]["state"].toLowerCase();
+        var icon;
+        switch (state) {
+            case "on":
+                icon = lightOnIcon;
+                break;
+            case "off":
+                icon = lightOffIcon;
+                break;
+            default:
+                icon = alertIcon;
         }
 
-        table.appendChild(row);
+        createButton(entity_id, lightName, icon, "toggle", 4);
     }
-
-    var content = document.getElementById("content");
-    content.innerHTML = "";
-    content.appendChild(table);
 }
 
-
 // LOAD AUTOMATIONS
-function loadContentAutomations() {
-    var apiData;
-    var table = document.createElement("table");
-    table.className = "table-devices";
+function loadContentAutomations(clear, reload_id) {
+    var automations = fetchEntitiesByType(["automation", "script"], reload_id);
+    for (var i = 0; i < automations.length; i++) {
+        const name = automations[i]["attributes"]["friendly_name"];
+        const entity_id = automations[i]["entity_id"];
+        const state = automations[i]["state"].toLowerCase();
+        const type = entity_id.substring(0, entity_id.indexOf("."));
+        var icon;
 
-    apiData = fetchAPIAndPopulateVariable();
-
-    var automations = [];
-
-    for (var i = 0; i < apiData.length; i++) {
-        if (apiData[i]["entity_id"].substring(0, apiData[i]["entity_id"].indexOf(".")) == "automation") {
-            automations.push(apiData[i]);
-        }
-    }
-
-    automations.sort(function (a, b) {
-        var keyA = a.attributes["friendly_name"].toLowerCase();
-        var keyB = b.attributes["friendly_name"].toLowerCase();
-
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
-
-    var numRows = Math.ceil(automations.length / 5);
-
-    for (var i = 0; i < numRows; i++) {
-        var row = document.createElement("tr");
-
-        for (var j = 0; j < 5; j++) {
-            var index = i * 5 + j;
-            if (index < automations.length) {
-                var cell = document.createElement("td");
-                cell.id = automations[index]["entity_id"];
-                var cellContent = automations[index]["attributes"]["friendly_name"] + "<br/>";
-
-                switch (automations[index]["state"].toLowerCase()) {
-                    case "on":
-                        cellContent += "<a href=\"javascript:homefunc('" + automations[index]["entity_id"] + "', 'turn_off', 4)\" >";
-                        cellContent += automationOnIcon;
-                        cellContent += "</a>"
-                        break;
-                    case "off":
-                        cellContent += "<a href=\"javascript:homefunc('" + automations[index]["entity_id"] + "', 'turn_on', 4)\" >";
-                        cellContent += automationOffIcon;
-                        cellContent += "</a>"
-                        break;
-                    default:
-                        cellContent += "<a href=\"javascript:homefunc('" + automations[index]["entity_id"] + "', 'toggle', 4)\" >";
-                        cellContent += alertIcon;
-                        cellContent += "</a>"
-                }
-                cell.innerHTML = cellContent;
-                row.appendChild(cell);
+        if (type == "script") {
+            switch (entity_id.substring(entity_id.indexOf("_") + 1)) {
+                case "an":
+                    icon = automationOnIcon;
+                    break;
+                case "aus":
+                    icon = automationOffIcon;
+                    break;
+                default:
+                    icon = automationOnIcon;
+            }
+            command = "turn_on";
+        } else {
+            switch (state) {
+                case "on":
+                    icon = automationOnIcon;
+                    command = "turn_off";
+                    break;
+                case "off":
+                    icon = automationOffIcon;
+                    command = "turn_on";
+                    break;
+                default:
+                    icon = alertIcon;
+                    command = "turn_on";
             }
         }
-
-        table.appendChild(row);
+        createButton(entity_id, name, icon, "turn_on", 5);
     }
-
-    var content = document.getElementById("content");
-    content.innerHTML = "";
-    content.appendChild(table);
 }
 
 
 // LOAD PLAYERS
-function loadContentPlayers(entity_id) {
-    var apiData;
+function loadContentPlayers(clear, reload_id) {
 
-    if (arguments.length == 1) {
-        apiData = fetchAPIAndPopulateVariable(entity_id);
-    } else {
-        apiData = fetchAPIAndPopulateVariable();
-    }
-
-    if (Object.prototype.toString.call(apiData) === "[object Array]") {
+    var players = fetchEntitiesByType(["media_player"], reload_id);
+    if (players.length > 1) {
         var table = document.createElement("table");
         table.className = "table-players";
-        var players = [];
-
-        for (var i = 0; i < apiData.length; i++) {
-            if (apiData[i]["entity_id"].substring(0, apiData[i]["entity_id"].indexOf(".")) == "media_player") {
-                players.push(apiData[i]);
-            }
-        }
-
-        players.sort(function (a, b) {
-            var keyA = a.attributes["friendly_name"].toLowerCase();
-            var keyB = b.attributes["friendly_name"].toLowerCase();
-
-            if (keyA < keyB) return -1;
-            if (keyA > keyB) return 1;
-            return 0;
-        });
 
         var numRows = Math.ceil(players.length / 2);
 
@@ -870,37 +866,7 @@ function loadContentPlayers(entity_id) {
                 if (index < players.length) {
                     var cell = document.createElement("td");
                     cell.id = players[index]["entity_id"];
-                    var cellContent = "<p class='sensor_value'>" + players[index]["attributes"]["friendly_name"] + "</p>";
-
-                    switch (players[index]["state"].toLowerCase()) {
-                        case "playing":
-                        case "paused":
-                        case "idle":
-                        case "standby":
-                        case "on":
-                            cellContent += "<a href=\"javascript:homefunc('" + players[index]["entity_id"] + "', 'turn_off', 5)\" >";
-                            cellContent += "<p class='sensor_value'>[" + players[index]["state"] + "]</p>";
-                            if (players[index]["attributes"]["entity_picture"] !== undefined) {
-                                cellContent += "<p><img style='width: 128px' src='" + players[index]["attributes"]["entity_picture"] + "'></img></p>";
-                            } else {
-                                cellContent += mediaPlayerOnIcon;
-                            }
-                            cellContent += "<p class='sensor_value'>" + findAttrByTerm("artist", players[index]["attributes"]) + "</p>";
-                            cellContent += "<p class='sensor_value'>" + findAttrByTerm("title", players[index]["attributes"]) + "</p>";
-                            cellContent += "<br/>"
-                            cellContent += "</a>"
-                            break;
-                        case "off":
-                            cellContent += "<a href=\"javascript:homefunc('" + players[index]["entity_id"] + "', 'turn_on', 5)\" >";
-                            cellContent += mediaPlayerOffIcon;
-                            cellContent += "</a>"
-                            break;
-                        default:
-                            cellContent += "<a href=\"javascript:homefunc('" + players[index]["entity_id"] + "', 'toggle', 5)\" >";
-                            cellContent += alertIcon;
-                            cellContent += "</a>"
-                    }
-                    cell.innerHTML = cellContent;
+                    cell.innerHTML = createPlayer(players[index]);
                     row.appendChild(cell);
                 }
             }
@@ -912,39 +878,70 @@ function loadContentPlayers(entity_id) {
         content.innerHTML = "";
         content.appendChild(table);
     } else {
-        var cellContent = "<p class='sensor_value'>" + apiData["attributes"]["friendly_name"] + "</p>";
-
-        switch (apiData["state"].toLowerCase()) {
-            case "playing":
-            case "paused":
-            case "idle":
-            case "standby":
-            case "on":
-                cellContent += "<a href=\"javascript:homefunc('" + apiData['entity_id'] + "', 'turn_off', 5)\" >";
-                cellContent += "<p class='sensor_value'>[" + apiData["state"] + "]</p>";
-                if (apiData["attributes"]["entity_picture"] !== undefined) {
-                    cellContent += "<p><img style='width: 256px' src='" + apiData["attributes"]["entity_picture"] + "'></img></p>";
-                } else {
-                    cellContent += mediaPlayerOnIcon;
-                }
-                cellContent += "<p class='sensor_value'>" + findAttrByTerm("artist", apiData["attributes"]) + "</p>";
-                cellContent += "<p class='sensor_value'>" + findAttrByTerm("title", apiData["attributes"]) + "</p>";
-                cellContent += "</a>"
-                break;
-            case "off":
-                cellContent += "<a href=\"javascript:homefunc('" + apiData['entity_id'] + "', 'turn_on', 5)\" >";
-                cellContent += mediaPlayerOffIcon;
-                cellContent += "</a>"
-                break;
-            default:
-                cellContent += "<a href=\"javascript:homefunc('" + apiData['entity_id'] + "', 'toggle', 5)\" >";
-                cellContent += alertIcon;
-                cellContent += "</a>"
-        }
+        var cellContent = createPlayer(players[0]);
 
         var content = document.getElementById("content-player");
         content.innerHTML = cellContent;
     }
+}
+
+
+function createPlayer(player) {
+    var cellContent = "<p class='sensor_value'>" + player["attributes"]["friendly_name"] + "</p>";
+    switch (player["state"].toLowerCase()) {
+        case "playing":
+        case "paused":
+        case "idle":
+        case "standby":
+        case "on":
+            cellContent += "<a href=\"javascript:homefunc('" + player['entity_id'] + "', 'turn_off', 6)\" >";
+            cellContent += "<p class='sensor_value'>[" + player["state"] + "]</p>";
+            if (player["attributes"]["entity_picture"] !== undefined) {
+                cellContent += "<p><img style='width: 256px' src='" + apiData["attributes"]["entity_picture"] + "'></img></p>";
+            } else {
+                cellContent += mediaPlayerOnIcon;
+            }
+            cellContent += "<p class='sensor_value'>" + findAttrByTerm("artist", player["attributes"]) + "</p>";
+            cellContent += "<p class='sensor_value'>" + findAttrByTerm("title", player["attributes"]) + "</p>";
+            cellContent += "</a>";
+            break;
+        case "off":
+            cellContent += "<a href=\"javascript:homefunc('" + player['entity_id'] + "', 'turn_on', 6)\" >";
+            cellContent += mediaPlayerOffIcon;
+            cellContent += "</a>";
+            break;
+        default:
+            cellContent += "<a href=\"javascript:homefunc('" + player['entity_id'] + "', 'toggle', 6)\" >";
+            cellContent += alertIcon;
+            cellContent += "</a>";
+    }
+    return cellContent;
+}
+
+function createButton(id, name, icon, command, tab) {
+    var cell = document.createElement("div");
+    cell.id = id;
+    cell.classList.add("light-switch");
+    cell.style.height = buttonSize + "px";
+    cell.style.width = buttonSize + "px";
+
+    var name = document.createTextNode(name);
+    cell.appendChild(name);
+    cell.appendChild(document.createElement("br"));
+
+    var link = document.createElement("a");
+    link.href = "javascript:homefunc('" + id + "', '" + command + "', " + tab + ")";
+    var icon;
+    link.innerHTML = icon;
+    cell.appendChild(link);
+
+    var existingIcon = document.getElementById(id);
+    if (existingIcon) {
+        existingIcon.innerHTML = cell.innerHTML;
+    } else {
+        document.getElementById("content").appendChild(cell);
+    }
+    return icon;
 }
 
 
