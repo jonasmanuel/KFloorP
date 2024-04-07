@@ -193,21 +193,26 @@ function loadContent(floor, entity_id) {
         floorEntities = devices2ndFloor;
     }
 
-    var newEntity = apiData;
     var weatherCount = 0;
     var trackerInZone = {};
 
     for (var i = 0; i < floorEntities.length; i++) {
+        var newEntity;
         if (Object.prototype.toString.call(apiData) === "[object Array]") {
-            var newEntity = apiData.filter(
-                function (item) {
-                    return item.entity_id === floorEntities[i][0];
+            for (var j in apiData) {
+                if (floorEntities[i][0] === apiData[j]["entity_id"]) {
+                    newEntity = apiData[j];
+                    continue;
                 }
-            );
-        } else {
-            var newEntity = [apiData];
+            }
+            if (!newEntity) {
+                continue;
+            }
 
-            if (floorEntities[i][0] != newEntity[0]["entity_id"]) {
+        } else {
+            newEntity = apiData;
+
+            if (floorEntities[i][0] != newEntity["entity_id"]) {
                 continue;
             }
         }
@@ -215,13 +220,13 @@ function loadContent(floor, entity_id) {
         // CREATE NEW ICON
         var newIcon = document.createElement("div");
         newIcon.className = "icon-div";
-        newIcon.id = newEntity[0]["entity_id"];
+        newIcon.id = newEntity["entity_id"];
         newIcon.style.top = floorEntities[i][1] + "px";
         newIcon.style.left = floorEntities[i][2] + "px";
 
-        var type = newEntity[0]["entity_id"].split(".")[0].toLowerCase();
+        var type = newEntity["entity_id"].split(".")[0].toLowerCase();
         if (type == "group") {
-            var group_entities = newEntity[0].attributes.entity_id;
+            var group_entities = newEntity.attributes.entity_id;
             if (group_entities) {
                 // assume same type for all grouped entities
                 type = group_entities[0].substring(0, group_entities[0].indexOf("."))
@@ -232,9 +237,9 @@ function loadContent(floor, entity_id) {
             case "light":
             case "switch":
                 var clickableIcon = document.createElement("a");
-                switch (newEntity[0]["state"].toLowerCase()) {
+                switch (newEntity["state"].toLowerCase()) {
                     case "on":
-                        clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'turn_off', " + floor + ")";
+                        clickableIcon.href = "javascript:homefunc('" + newEntity["entity_id"] + "', 'turn_off', " + floor + ")";
 
                         switch (type) {
                             case "light":
@@ -277,7 +282,7 @@ function loadContent(floor, entity_id) {
                         }
                         break;
                     case "off":
-                        clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'turn_on', " + floor + ")";
+                        clickableIcon.href = "javascript:homefunc('" + newEntity["entity_id"] + "', 'turn_on', " + floor + ")";
 
                         switch (type) {
                             case "light":
@@ -320,7 +325,7 @@ function loadContent(floor, entity_id) {
                         }
                         break;
                     default:
-                        clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'toggle', " + floor + ")";
+                        clickableIcon.href = "javascript:homefunc('" + newEntity["entity_id"] + "', 'toggle', " + floor + ")";
                         clickableIcon.innerHTML = alertIcon;
                 }
                 newIcon.appendChild(clickableIcon);
@@ -328,7 +333,7 @@ function loadContent(floor, entity_id) {
 
             // BINARY SENSOR
             case "binary_sensor":
-                switch (newEntity[0]["state"].toLowerCase()) {
+                switch (newEntity["state"].toLowerCase()) {
                     case "on":
                         if (floorEntities[i].length < 4) {
                             newIcon.innerHTML = binarySensorOnIcon;
@@ -382,7 +387,7 @@ function loadContent(floor, entity_id) {
                             newIcon.innerHTML = humidityIcon;
                             break;
                         case "friendly":
-                            newIcon.innerHTML = "<p class='sensor_value'>" + (newEntity[0]["attributes"]["friendly_name"] != undefined ? newEntity[0]["attributes"]["friendly_name"] : "") + "</p>";
+                            newIcon.innerHTML = "<p class='sensor_value'>" + (newEntity["attributes"]["friendly_name"] != undefined ? newEntity["attributes"]["friendly_name"] : "") + "</p>";
                             break;
                         case "blank":
                             newIcon.innerHTML = "";
@@ -394,7 +399,7 @@ function loadContent(floor, entity_id) {
 
                 var sensorValue = document.createElement("p");
                 sensorValue.className = "sensor_value";
-                sensorValue.innerHTML = newEntity[0]["state"] + "" + (newEntity[0]["attributes"]["unit_of_measurement"] != undefined ? newEntity[0]["attributes"]["unit_of_measurement"] : "");
+                sensorValue.innerHTML = newEntity["state"] + "" + (newEntity["attributes"]["unit_of_measurement"] != undefined ? newEntity["attributes"]["unit_of_measurement"] : "");
                 newIcon.appendChild(sensorValue);
                 break;
 
@@ -402,10 +407,10 @@ function loadContent(floor, entity_id) {
             case "media_player":
                 var clickableIcon = document.createElement("a");
 
-                switch (newEntity[0]["state"].toLowerCase()) {
+                switch (newEntity["state"].toLowerCase()) {
                     case "playing":
                     case "paused":
-                        clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'media_play_pause', " + floor + ")";
+                        clickableIcon.href = "javascript:homefunc('" + newEntity["entity_id"] + "', 'media_play_pause', " + floor + ")";
                         if (floorEntities[i].length == 4) {
                             switch (floorEntities[i][3].toLowerCase()) {
                                 case "tv":
@@ -426,15 +431,15 @@ function loadContent(floor, entity_id) {
 
                         var playing_info = "<p class='media_info'>";
 
-                        if (newEntity[0]["state"] == "paused") {
+                        if (newEntity["state"] == "paused") {
                             playing_info += "[Paused] ";
                         }
 
-                        if (findAttrByTerm("title", newEntity[0]["attributes"]) !== null) {
-                            if (newEntity[0]["attributes"]["media_artist"] !== null) {
-                                playing_info += findAttrByTerm("artist", newEntity[0]["attributes"]) + "</br>" + findAttrByTerm("title", newEntity[0]["attributes"]);
+                        if (findAttrByTerm("title", newEntity["attributes"]) !== null) {
+                            if (newEntity["attributes"]["media_artist"] !== null) {
+                                playing_info += findAttrByTerm("artist", newEntity["attributes"]) + "</br>" + findAttrByTerm("title", newEntity["attributes"]);
                             } else {
-                                playing_info += findAttrByTerm("title", newEntity[0]["attributes"]);
+                                playing_info += findAttrByTerm("title", newEntity["attributes"]);
                             }
                         }
 
@@ -447,7 +452,7 @@ function loadContent(floor, entity_id) {
                         clickableIcon.innerHTML += playing_info;
                         break;
                     case "on":
-                        clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'turn_off', " + floor + ")";
+                        clickableIcon.href = "javascript:homefunc('" + newEntity["entity_id"] + "', 'turn_off', " + floor + ")";
 
                         if (floorEntities[i].length == 4) {
                             switch (floorEntities[i][3].toLowerCase()) {
@@ -469,8 +474,8 @@ function loadContent(floor, entity_id) {
 
                         var playing_info = "<p class='media_info'>";
 
-                        if (newEntity[0]["attributes"]["source"] !== null) {
-                            playing_info += newEntity[0]["attributes"]["source"];
+                        if (newEntity["attributes"]["source"] !== null) {
+                            playing_info += newEntity["attributes"]["source"];
                         }
 
                         playing_info += "</p>";
@@ -479,7 +484,7 @@ function loadContent(floor, entity_id) {
                         break;
                     case "idle":
                     case "standby":
-                        clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'turn_off', " + floor + ")";
+                        clickableIcon.href = "javascript:homefunc('" + newEntity["entity_id"] + "', 'turn_off', " + floor + ")";
 
                         if (floorEntities[i].length == 4) {
                             switch (floorEntities[i][3].toLowerCase()) {
@@ -500,7 +505,7 @@ function loadContent(floor, entity_id) {
                         }
                         break;
                     case "off":
-                        clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'turn_on', " + floor + ")";
+                        clickableIcon.href = "javascript:homefunc('" + newEntity["entity_id"] + "', 'turn_on', " + floor + ")";
 
                         if (floorEntities[i].length == 4) {
                             switch (floorEntities[i][3].toLowerCase()) {
@@ -533,29 +538,29 @@ function loadContent(floor, entity_id) {
                 if (floorEntities[i].length == 4) {
                     switch (floorEntities[i][3].toLowerCase()) {
                         case "extended":
-                            populateForecast(newEntity[0], newIcon, "°C");
+                            populateForecast(newEntity, newIcon, "°C");
                             break;
                         default:
-                            populateToday(newEntity[0], newIcon, "°C")
+                            populateToday(newEntity, newIcon, "°C")
                     }
                 } else {
-                    populateToday(newEntity[0], newIcon, "°C")
+                    populateToday(newEntity, newIcon, "°C")
                 }
                 break;
             case "device_tracker":
-                var name = newEntity[0].attributes.friendly_name.split(" ")[1];
+                var name = newEntity.attributes.friendly_name.split(" ")[1];
                 if (floorEntities[i].length == 4) {
                     var zone = floorEntities[i][3];
                     newIcon.id += "_" + zone;
-                    if (newEntity[0].state == zone) {
+                    if (newEntity.state == zone) {
                         newIcon.innerHTML = name + "<br/>" + pawIcon;
-                        trackerInZone[newEntity[0]["entity_id"]] = zone;
+                        trackerInZone[newEntity["entity_id"]] = zone;
                     } else {
                         newIcon.innerHTML = "";
                     }
                 } else {
-                    if (!trackerInZone[newEntity[0]["entity_id"]]) {
-                        newIcon.innerHTML = name + "<br/>" + pawIcon + "<br/>" + newEntity[0].state;
+                    if (!trackerInZone[newEntity["entity_id"]]) {
+                        newIcon.innerHTML = name + "<br/>" + pawIcon + "<br/>" + newEntity.state;
                     } else {
                         newIcon.innerHTML = "";
                     }
@@ -565,7 +570,7 @@ function loadContent(floor, entity_id) {
 
             // OTHERS
             default:
-                newIcon.innerHTML = "<p class='sensor_value'>" + newEntity[0]["entity_id"] + "<br/>" + newEntity[0]["state"] + "</p>";
+                newIcon.innerHTML = "<p class='sensor_value'>" + newEntity["entity_id"] + "<br/>" + newEntity["state"] + "</p>";
         }
 
         var existingIcon = document.getElementById(newIcon.id);
