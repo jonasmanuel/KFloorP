@@ -38,7 +38,16 @@ var showAmPmTime = false;
 var showWeatherIcon = true;
 
 // SHOW (true) / HIDE (false) a zig zag background pattern
-var showBackgroundPattern = true;
+
+var localization = {
+    // uncomment and customize the menu titles
+    //    "menu1.title": "Layout",
+    //    "menu2.title": "2. Stock",
+    //    "menu3.title": "Schalter",
+    //    "menu4.title": "Lampen",
+    //    "menu5.title": "Automationen",
+    //    "menu6.title": "Players",
+}
 
 // BELOW YOU NEED TO ADD YOUR DEVICES IN THE FOLLOWING FORMAT:
 // ['domain.device_id', X position, Y position, 'type'],

@@ -176,6 +176,15 @@ function setupMenu() {
         var divMenuPlayers = document.getElementById("menu6");
         divMenuPlayers.parentElement.removeChild(divMenuPlayers);
     }
+
+    var tabTitles = document.getElementsByClassName("tabTitle");
+    for (var i = 0; i < tabTitles.length; i++) {
+        var span = tabTitles[i];
+        var parentId = span.parentElement.id;
+        if (localization[parentId + ".title"]) {
+            span.innerHTML = localization[parentId + ".title"];
+        }
+    }
 }
 
 
