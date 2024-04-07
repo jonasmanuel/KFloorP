@@ -73,6 +73,10 @@ function startup() {
         loadTab(1);
     }
 
+    if (showBackgroundPattern) {
+        document.getElementById("wrapper").classList.add("withBackground")
+    }
+
 }
 
 function includes(array, elem) {

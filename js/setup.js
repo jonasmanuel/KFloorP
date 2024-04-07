@@ -37,6 +37,9 @@ var showAmPmTime = false;
 // SHOW (true) / HIDE (false) WEATHER ICON ON EXTENDED FORECAST
 var showWeatherIcon = true;
 
+// SHOW (true) / HIDE (false) a zig zag background pattern
+var showBackgroundPattern = true;
+
 // BELOW YOU NEED TO ADD YOUR DEVICES IN THE FOLLOWING FORMAT:
 // ['domain.device_id', X position, Y position, 'type'],
 //
