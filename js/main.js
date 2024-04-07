@@ -219,7 +219,15 @@ function loadContent(floor, entity_id) {
         newIcon.style.top = floorEntities[i][1] + "px";
         newIcon.style.left = floorEntities[i][2] + "px";
 
-        switch (newEntity[0]["entity_id"].split(".")[0].toLowerCase()) {
+        var type = newEntity[0]["entity_id"].split(".")[0].toLowerCase();
+        if (type == "group") {
+            var group_entities = newEntity[0].attributes.entity_id;
+            if (group_entities) {
+                // assume same type for all grouped entities
+                type = group_entities[0].substring(0, group_entities[0].indexOf("."))
+            }
+        }
+        switch (type) {
             // LIGHT AND SWITCH
             case "light":
             case "switch":
@@ -228,7 +236,7 @@ function loadContent(floor, entity_id) {
                     case "on":
                         clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'turn_off', " + floor + ")";
 
-                        switch (newEntity[0]["entity_id"].split(".")[0].toLowerCase()) {
+                        switch (type) {
                             case "light":
                                 clickableIcon.innerHTML = lightOnIcon;
                                 break;
@@ -271,7 +279,7 @@ function loadContent(floor, entity_id) {
                     case "off":
                         clickableIcon.href = "javascript:homefunc('" + newEntity[0]["entity_id"] + "', 'turn_on', " + floor + ")";
 
-                        switch (newEntity[0]["entity_id"].split(".")[0].toLowerCase()) {
+                        switch (type) {
                             case "light":
                                 clickableIcon.innerHTML = lightOffIcon;
                                 break;
