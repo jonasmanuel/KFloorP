@@ -548,6 +548,9 @@ function loadContent(floor, entity_id) {
             case "weather":
                 newIcon.id += weatherCount++;
                 newIcon.className = "forecast-container";
+                if (verticalExtendeForecast) {
+                    newIcon.className += " vertical";
+                }
                 if (floorEntities[i].length == 4) {
                     switch (floorEntities[i][3].toLowerCase()) {
                         case "extended":

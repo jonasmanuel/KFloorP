@@ -36,8 +36,11 @@ var showAmPmTime = false;
 
 // SHOW (true) / HIDE (false) WEATHER ICON ON EXTENDED FORECAST
 var showWeatherIcon = true;
+// set to true to make vertical stack for extended weather forecast
+var verticalExtendeForecast = false;
 
 // SHOW (true) / HIDE (false) a zig zag background pattern
+var showBackgroundPattern = true;
 
 var localization = {
     // uncomment and customize the menu titles
