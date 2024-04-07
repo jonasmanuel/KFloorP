@@ -628,6 +628,8 @@ function setFloorPlanImg(floor) {
     var floorplanImgDiv = document.getElementById("floorplanImg");
     floorplanImgDiv.classList.remove("hidden");
 
+    document.getElementById("floorplan").style.marginLeft = floorPlanShift + "px";
+
     if (floor == 1) {
         floorplanImgDiv.src = floorplan1stFloor;
     } else if (floor == 2) {

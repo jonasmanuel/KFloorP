@@ -13,6 +13,8 @@ var hasspass = "";
 // EXAMPLE: var floorplan1stFloor = "./images/blank.png"
 var floorplan1stFloor = "./images/floorplan.png"; // YOUR FLOORPLAN IMAGE PATH FOR 1ST FLOOR
 var floorplan2ndFloor = "./images/blank.png"; // YOUR FLOORPLAN IMAGE PATH FOR 2ND FLOOR
+// shift floorplan image right(positive) or left(negative) 
+var floorPlanShift = 0;
 
 // SHOW (true) / HIDE (false) MENUS
 // SELECT A MAXIMUM OF 3 ITEMS (IF YOU USE ONLY ONE FLOOR) OR 2 ITEMS (IF YOU USE 2 FLOORS) TO FIT IN THE MENU
